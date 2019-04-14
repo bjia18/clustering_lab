@@ -1,0 +1,141 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyCM2XMOAsoTdl5H2JsaUO0QzWHnX40fYOA'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['Country', 'Group'],
+          ['Africa East', 0],
+        ['Arab countries', 0],
+        ['Bangladesh', 0],
+        ['Bulgaria', 0],
+        ['Croatia', 0],
+        ['Ecuador', 0],
+        ['Georgia', 0],
+        ['Guatemala', 0],
+        ['Pakistan', 0],
+        ['Panama', 0],
+        ['Romania', 0],
+        ['Russia', 0],
+        ['Serbia', 0],
+        ['Suriname', 0],
+        ['Switzerland German', 1],
+        ['Australia', 1],
+        ['Austria', 1],
+        ['Canada', 1],
+        ['Denmark', 1],
+        ['Finland', 1],
+        ['Great Britain', 1],
+        ['Ireland', 1],
+        ['Netherlands', 1],
+        ['New Zealand', 1],
+        ['Norway', 1],
+        ['Sweden', 1],
+        ['Switzerland', 1],
+        ['U.S.A.', 1],
+        ['Germany East', 2],
+        ['Albania', 2],
+        ['Armenia', 2],
+        ['Azerbaijan', 2],
+        ['Belarus', 2],
+        ['Belgium', 2],
+        ['Bosnia', 2],
+        ['Czech Rep', 2],
+        ['Estonia', 2],
+        ['Germany', 2],
+        ['Japan', 2],
+        ['Korea South', 2],
+        ['Kyrgyz Rep', 2],
+        ['Latvia', 2],
+        ['Lithuania', 2],
+        ['Luxembourg', 2],
+        ['Macedonia Rep', 2],
+        ['Moldova', 2],
+        ['Montenegro', 2],
+        ['Taiwan', 2],
+        ['Ukraine', 2],
+        ['Africa West', 3],
+        ['Colombia', 3],
+        ['Dominican Rep', 3],
+        ['El Salvador', 3],
+        ['Ghana', 3],
+        ['Iceland', 3],
+        ['Jordan', 3],
+        ['Mali', 3],
+        ['Mexico', 3],
+        ['Nigeria', 3],
+        ['Puerto Rico', 3],
+        ['Saudi Arabia', 3],
+        ['South Africa', 3],
+        ['Trinidad and Tobago', 3],
+        ['Uganda', 3],
+        ['Venezuela', 3],
+        ['Algeria', 4],
+        ['Argentina', 4],
+        ['Brazil', 4],
+        ['Chile', 4],
+        ['Costa Rica', 4],
+        ['Greece', 4],
+        ['Iran', 4],
+        ['Malta', 4],
+        ['Peru', 4],
+        ['Portugal', 4],
+        ['Rwanda', 4],
+        ['Slovenia', 4],
+        ['Spain', 4],
+        ['Tanzania', 4],
+        ['Thailand', 4],
+        ['Turkey', 4],
+        ['Uruguay', 4],
+        ['Zambia', 4],
+        ['Belgium French', 5],
+        ['Belgium Netherl', 5],
+        ['Canada French', 5],
+        ['South Africa white', 5],
+        ['Switzerland French', 5],
+        ['Burkina Faso', 5],
+        ['Egypt', 5],
+        ['France', 5],
+        ['Hungary', 5],
+        ['Iraq', 5],
+        ['Israel', 5],
+        ['Italy', 5],
+        ['Morocco', 5],
+        ['Poland', 5],
+        ['Zimbabwe', 5],
+        ['China', 6],
+        ['Hong Kong', 6],
+        ['India', 6],
+        ['Indonesia', 6],
+        ['Jamaica', 6],
+        ['Malaysia', 6],
+        ['Philippines', 6],
+        ['Singapore', 6],
+        ['Slovak Rep', 6],
+        ['Vietnam', 6],
+        ]);
+
+        var options = {colorAxis: {
+                colors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'],
+                values: [0, 1, 2, 3, 4, 5, 6]
+            }
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

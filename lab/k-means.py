@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import bisect_k
 import hierarchical
+import word_cloud
 from sse_and_centroid import*
 
 def read_file():
@@ -103,7 +104,7 @@ def main():
         for country in c:
             file.write("['" + country + "', " + str(i) + "],\n")
     file.close()
-    #make_word_clouds(clusters, vectors)
+    word_cloud.cloud(clusters, data)
 
 if __name__ == "__main__":
     main()

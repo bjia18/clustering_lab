@@ -86,25 +86,34 @@ def main():
     #test_metrics(data)
     #b_k(data, countries)
     #hierarchical.hier(data,countries)
-    raw_clusters = clus.kcluster(data, distance=func, k=best_k)
-    clusters = []
-    country_clusters = []
-    for i in range(best_k):
-        if len(raw_clusters[i]) == 0:
-            continue
-        clusters.append(raw_clusters[i])
-        print('cluster {}:'.format(i + 1))
-        print([countries[j] for j in raw_clusters[i]])
-        country_clusters.append([countries[j][1] for j in raw_clusters[i]])
-    print("sse: " + str(sse(clusters, data)))
-
+    final_clusters = []
+    final_country_clusters = []
+    best_sse=5
+    for j in range(1001):
+        raw_clusters = clus.kcluster(data, distance=func, k=best_k)
+        clusters=[]
+        country_clusters=[]
+        for i in range(best_k):
+            if len(raw_clusters[i]) == 0:
+                continue
+            clusters.append(raw_clusters[i])
+            #print('cluster {}:'.format(i + 1))
+            #print([countries[j] for j in raw_clusters[i]])
+            country_clusters.append([countries[j][1] for j in raw_clusters[i]])
+        temp_sse=sse(clusters, data)
+        print('process: '+str(j))
+        if temp_sse<best_sse:
+            best_sse=temp_sse
+            final_clusters=clusters
+            final_country_clusters=country_clusters
+    print('best sse: '+str(best_sse)) 
     file = open('cluster_results.json', "w")
-    for i in range(len(country_clusters)):
-        c = country_clusters[i]
+    for i in range(len(final_country_clusters)):
+        c = final_country_clusters[i]
         for country in c:
             file.write("['" + country + "', " + str(i) + "],\n")
     file.close()
-    word_cloud.cloud(clusters, data)
+    word_cloud.cloud(final_clusters, data)
 
 if __name__ == "__main__":
     main()

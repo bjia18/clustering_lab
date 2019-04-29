@@ -1,30 +1,58 @@
-data=open('dataset.csv')
-title=True
-countries=[]
-averages=[0,0,0,0,0,0,0]
-for i in data:
-    if title:
-        title=False
-        continue
-    i=i.strip('\n')
-    j=i.split(',')
-    for m in range(2,9):#add up values
-        if j[m]:
-            j[m]=int(j[m])
-            averages[m-2]+=j[m]
-    countries.append(j)
+import clusters
+data_range=range(2,8)
+indexes=[]
+raw_data=[]
 
-for i in range(7):#fill in the blanks with average
-    averages[i]=round(averages[i]/len(countries))
-for i in countries:
-    for m in range(2,9):
-        if i[m]=='':
-            i[m]=averages[m-2]
-    print(i)
-output = open('processed_data.csv', "w")
+def find_similar(country, available):
+    similarities = []  # List of 3 tuples of (index, score) with highest score
+    country_vector = [int(country[i]) for i in available]
 
-for l in countries:#write output
-    for i in range(len(l)):
-        output.write(str(l[i]) + ('\n' if i == (len(l) - 1) else ','))
+    for i in range(len(raw_data)):
+        if '' in raw_data[i]:  # Skip countries without a full set of data
+            continue
 
-output.close()
+        test_vector = [int(raw_data[i][j]) for j in available]
+        similarities = sorted(similarities + [(clusters.pearson(country_vector, test_vector), i)])[:3]
+
+    return [raw_data[i] for i in map(lambda x: x[1], similarities)]
+
+
+# Fill in missing values for a country
+def fill(country):
+    available = list(data_range)
+    country_missing = []
+
+    for i in data_range:
+        if country[i] == '':
+            available.remove(i)
+            country_missing.append(i)
+    similar_countries = find_similar(country, available)
+    # Fill in missing values with averages
+    for index in country_missing:
+        country[index] = str(round(sum(map(lambda x: int(x[index]), similar_countries))/3))
+
+def main():
+    data=open('dataset.csv')
+    count=-1
+    for line in data:
+        if count==-1:
+            count+=1
+            continue
+        arr = line.rstrip().split(',')
+        if '' in arr:
+            indexes.append(count)
+        raw_data.append(arr)
+        count+=1
+    data.close()
+    for index in indexes:
+        fill(raw_data[index])
+    
+    output = open('processed_data.csv', "w")
+    for line in raw_data:
+        for i in range(len(line)):
+            output.write(line[i] + ('\n' if i == (len(line) - 1) else ','))
+
+    output.close()
+
+if __name__ == "__main__":
+    main()
